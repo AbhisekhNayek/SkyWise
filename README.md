@@ -1,6 +1,7 @@
 # 🌤️ SkyWise App 🌦️
 
-Welcome to the **SkyWise App**! This project is a feature-rich weather application providing real-time weather updates, detailed forecasts, air quality information, and much more! 🌍✨
+Welcome to the **SkyWise App**! 
+This project is a feature-rich weather application providing real-time weather updates, detailed forecasts, air quality information, and much more! 🌍✨
 
 ## 🚀 Features
 
@@ -24,8 +25,8 @@ To get started with the SkyWise App, follow these steps:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/AbhisekhNayek/weather-app.git
-   cd weather-app
+   git clone https://github.com/AbhisekhNayek/SkyWise.git
+   cd SkyWise
    ```
 
 2. Install dependencies:
@@ -54,10 +55,6 @@ npm run test
 ## 🤝 Contributing
 
 Contributions are welcome! If you have ideas for improvement, feel free to fork the repo and submit a pull request. 🛠️
-
-## 🌟 License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
 
 ## 👤 Author
 
