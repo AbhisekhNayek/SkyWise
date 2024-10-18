@@ -42,7 +42,7 @@ To get started with the SkyWise App, follow these steps:
 
 ## 📸 Screenshots
 
-![SkyWise App Screenshot](`public\SkyWise.png`)
+![SkyWise App Screenshot](`https://github.com/AbhisekhNayek/weather-app/blob/master/public/SkyWise.png`)
 
 ## 🧪 Testing
 
