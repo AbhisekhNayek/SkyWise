@@ -1,7 +1,18 @@
 {
-  "compilerOptions": {
-    "paths": {
-      "@/*": ["./*"]
-    }
+    "compilerOptions": {
+      "target": "esnext",
+      "module": "esnext",
+      "baseUrl": ".",
+      "paths": {
+        "@/*": ["./*"]
+      }
+    },
+    "include": [
+      "next-env.d.ts",
+      "**/*.js",
+      "**/*.jsx",
+      "app/**/*"
+    ],
+    "exclude": ["node_modules"]
   }
-}
+  
