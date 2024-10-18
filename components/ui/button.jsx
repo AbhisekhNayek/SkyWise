@@ -29,31 +29,28 @@ const buttonVariants = cva(
   }
 );
 
-const Button = React.forwardRef(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
-    const Comp = asChild ? Slot : "button";
+const Button = React.forwardRef(({ className, variant, size, asChild = false, ...props }, ref) => {
+  const Comp = asChild ? Slot : "button";
 
-    // Ensure consistent rendering on client and server
-    const [isMounted, setIsMounted] = React.useState(false);
-    
-    React.useEffect(() => {
-      setIsMounted(true);
-    }, []);
+  // Ensure consistent rendering on client and server
+  const [isMounted, setIsMounted] = React.useState(false);
+  
+  React.useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
-    if (!isMounted) {
-      // Render null or a placeholder until the component is mounted
-      return null;
-    }
-
-    return (
-      <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
-        ref={ref}
-        {...props}
-      />
-    );
+  if (!isMounted) {
+    return null; // Render nothing until mounted
   }
-);
+
+  return (
+    <Comp
+      className={cn(buttonVariants({ variant, size, className }))}
+      ref={ref}
+      {...props}
+    />
+  );
+});
 Button.displayName = "Button";
 
 export { Button, buttonVariants };

@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "@/app/context/globalContext";
 import {
@@ -15,22 +16,50 @@ import moment from "moment";
 function Temperature() {
   const { forecast } = useGlobalContext();
 
-  const { main, timezone, name, weather } = forecast;
-
-  if (!forecast || !weather) {
-    return <div>Loading...</div>;
-  }
-
-  const temp = kelvinToCelsius(main.temp);
-  const minTemp = kelvinToCelsius(main.temp_min);
-  const maxTemp = kelvinToCelsius(main.temp_max);
-
   // State
   const [localTime, setLocalTime] = useState("");
   const [currentDay, setCurrentDay] = useState("");
+  const [temp, setTemp] = useState(null);
+  const [minTemp, setMinTemp] = useState(null);
+  const [maxTemp, setMaxTemp] = useState(null);
+  const [weatherMain, setWeatherMain] = useState("");
+  const [description, setDescription] = useState("");
+  const [timezone, setTimezone] = useState(0);
+  const [name, setName] = useState("");
 
-  const { main: weatherMain, description } = weather[0];
+  // Effect to set temperature and weather data when forecast changes
+  useEffect(() => {
+    if (forecast && forecast.weather) {
+      const { main, timezone, name, weather } = forecast;
+      setTemp(kelvinToCelsius(main.temp));
+      setMinTemp(kelvinToCelsius(main.temp_min));
+      setMaxTemp(kelvinToCelsius(main.temp_max));
+      setWeatherMain(weather[0].main);
+      setDescription(weather[0].description);
+      setTimezone(timezone);
+      setName(name);
+    }
+  }, [forecast]);
 
+  // Hook to update local time
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const localMoment = moment().utcOffset(timezone / 60);
+      const formattedTime = localMoment.format("HH:mm:ss");
+      const day = localMoment.format("dddd");
+      setLocalTime(formattedTime);
+      setCurrentDay(day);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [timezone]);
+
+  // Loading state
+  if (temp === null) {
+    return <div>Loading...</div>; // Show loading while temp is null
+  }
+
+  // Function to get weather icon based on the main weather type
   const getIcon = () => {
     switch (weatherMain) {
       case "Drizzle":
@@ -48,29 +77,8 @@ function Temperature() {
     }
   };
 
-  // Live time update
-  useEffect(() => {
-    // Update time every second
-    const interval = setInterval(() => {
-      const localMoment = moment().utcOffset(timezone / 60);
-      // Custom format: 24 hour format
-      const formattedTime = localMoment.format("HH:mm:ss");
-      // Day of the week
-      const day = localMoment.format("dddd");
-
-      setLocalTime(formattedTime);
-      setCurrentDay(day);
-    }, 1000);
-
-    // Clear interval
-    return () => clearInterval(interval);
-  }, [timezone]);
-
   return (
-    <div
-      className="pt-6 pb-5 px-4 border rounded-lg flex flex-col 
-        justify-between dark:bg-dark-grey shadow-sm dark:shadow-none"
-    >
+    <div className="pt-6 pb-5 px-4 border rounded-lg flex flex-col justify-between dark:bg-dark-grey shadow-sm dark:shadow-none">
       <p className="flex justify-between items-center">
         <span className="font-medium">{currentDay}</span>
         <span className="font-medium">{localTime}</span>
@@ -80,7 +88,6 @@ function Temperature() {
         <span>{navigation}</span>
       </p>
       <p className="py-10 text-9xl font-bold self-center">{temp}°</p>
-
       <div>
         <div>
           <span>{getIcon()}</span>

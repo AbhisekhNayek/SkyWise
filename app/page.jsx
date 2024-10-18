@@ -1,12 +1,13 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import Image from "next/image";
+import Navbar from "./Components/Navbar";
+import defaultStates from "./utils/defaultStates";
+import { useGlobalContextUpdate } from "./context/globalContext";
 import AirPollution from "./Components/AirPollution/AirPollution";
 import DailyForecast from "./Components/DailyForecast/DailyForecast";
 import FeelsLike from "./Components/FeelsLike/FeelsLike";
 import Humidity from "./Components/Humidity/Humidity";
-import Navbar from "./Components/Navbar";
 import Population from "./Components/Population/Population";
 import Pressure from "./Components/Pressure/Pressure";
 import Sunset from "./Components/Sunset/Sunset";
@@ -14,24 +15,19 @@ import Temperature from "./Components/Temperature/Temperature";
 import UvIndex from "./Components/UvIndex/UvIndex";
 import Visibility from "./Components/Visibility/Visibility";
 import Wind from "./Components/Wind/Wind";
-import defaultStates from "./utils/defaultStates";
 import FiveDayForecast from "./Components/FiveDayForecast/FiveDayForecast";
-import { useGlobalContextUpdate } from "./context/globalContext";
 
-// Dynamically import Mapbox with ssr: false
 const Mapbox = dynamic(() => import("./Components/Mapbox/Mapbox"), { ssr: false });
 
 export default function Home() {
   const { setActiveCityCoords } = useGlobalContextUpdate();
 
-  const getClickedCityCords = (lat, lon) => {
+  const getClickedCityCoords = (lat, lon) => {
     setActiveCityCoords([lat, lon]);
-
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  const isParentButton = true; // Replace with your condition to check if parent is a button
 
   return (
     <main className="mx-[1rem] lg:mx-[2rem] xl:mx-[6rem] 2xl:mx-[16rem] m-auto">
@@ -57,23 +53,28 @@ export default function Home() {
           <div className="mapbox-con mt-4 flex gap-4">
             <Mapbox />
             <div className="states flex flex-col gap-3 flex-1">
-              <h2 className="flex items-center gap-2 font-medium">
-                Top Cities
-              </h2>
+              <h2 className="flex items-center gap-2 font-medium">Top Cities</h2>
               <div className="flex flex-col gap-4">
-                {defaultStates.map((state, index) => {
-                  return (
-                    <div
-                      key={index}
-                      className="border rounded-lg cursor-pointer dark:bg-dark-grey shadow-sm dark:shadow-none"
-                      onClick={() => {
-                        getClickedCityCords(state.lat, state.lon);
-                      }}
-                    >
+                {defaultStates.map((state, index) => (
+                  <div
+                    key={index}
+                    className="border rounded-lg cursor-pointer dark:bg-dark-grey shadow-sm dark:shadow-none"
+                    onClick={() => getClickedCityCoords(state.lat, state.lon)}
+                    role="button"
+                    tabIndex={0}
+                    onKeyPress={(e) => {
+                      if (e.key === 'Enter') {
+                        getClickedCityCoords(state.lat, state.lon);
+                      }
+                    }}
+                  >
+                    {isParentButton ? (
                       <p className="px-6 py-4">{state.name}</p>
-                    </div>
-                  );
-                })}
+                    ) : (
+                      <button className="px-6 py-4">{state.name}</button> // Only render button if not nested
+                    )}
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -82,7 +83,7 @@ export default function Home() {
 
       <footer className="py-4 flex justify-center pb-8">
         <p className="footer-text text-sm flex items-center gap-1">
-        Made with ❤️ by Abhisekh
+          Made with ❤️ by Abhisekh
         </p>
       </footer>
     </main>

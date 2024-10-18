@@ -1,4 +1,4 @@
-"use client";
+import React, { useState } from "react";
 import {
   useGlobalContext,
   useGlobalContextUpdate,
@@ -7,12 +7,10 @@ import { commandIcon } from "@/app/utils/icons";
 import { Button } from "@/components/ui/button";
 import { Command, CommandInput } from "@/components/ui/command";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import React, { useState } from "react";
 
 function SearchDialog() {
   const { geoCodedList, inputValue, handleInput } = useGlobalContext();
   const { setActiveCityCoords } = useGlobalContextUpdate();
-
   const [hoveredIndex, setHoveredIndex] = useState(0);
 
   const getClickedCoords = (lat, lon) => {
@@ -22,17 +20,20 @@ function SearchDialog() {
   return (
     <div className="search-btn">
       <Dialog>
-        <DialogTrigger>
-          <Button
-            variant="outline"
-            className="border inline-flex items-center justify-center text-sm font-medium hover:dark:bg-[#131313] hover:bg-slate-100 ease-in-out duration-200"
-          >
-            <p className="text-sm text-muted-foreground">Search Here...</p>
-            <div className="command dark:bg-[#262626] bg-slate-200 py-[2px] pl-[5px] pr-[7px] rounded-sm ml-[10rem] flex items-center gap-2">
-              {commandIcon}
-              <span className="text-[9px]">F</span>
-            </div>
-          </Button>
+        <DialogTrigger asChild>
+          {/* Use asChild prop to prevent button nesting */}
+          <span>
+            <Button
+              variant="outline"
+              className="border inline-flex items-center justify-center text-sm font-medium hover:dark:bg-[#131313] hover:bg-slate-100 ease-in-out duration-200"
+            >
+              <p className="text-sm text-muted-foreground">Search Here...</p>
+              <div className="command dark:bg-[#262626] bg-slate-200 py-[2px] pl-[5px] pr-[7px] rounded-sm ml-[10rem] flex items-center gap-2">
+                {commandIcon}
+                <span className="text-[9px]">F</span>
+              </div>
+            </Button>
+          </span>
         </DialogTrigger>
 
         <DialogContent className="p-0">
