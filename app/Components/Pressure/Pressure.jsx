@@ -7,6 +7,7 @@ import React from "react";
 function Pressure() {
   const { forecast } = useGlobalContext();
 
+  // Loading state
   if (!forecast || !forecast.main || !forecast.main.pressure) {
     return <Skeleton className="h-[12rem] w-full" />;
   }
@@ -27,13 +28,13 @@ function Pressure() {
 
     if (pressure >= 1040) return "Very high pressure. Expect weather changes.";
 
-    return "Unavailable pressure data";
+    return "Pressure data not available";
   };
 
   return (
     <div className="pt-6 pb-5 px-4 h-[12rem] border rounded-lg flex flex-col gap-8 dark:bg-dark-grey shadow-sm dark:shadow-none">
       <div className="top">
-        <h2 className="flex items-center gap-2 font-medium">
+        <h2 className="flex items-center gap-2 font-medium" aria-label="Pressure Information">
           {gauge} Pressure
         </h2>
         <p className="pt-4 text-2xl">{pressure} hPa</p>

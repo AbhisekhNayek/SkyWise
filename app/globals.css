@@ -6,60 +6,43 @@
   :root {
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
-
     --card: 0 0% 100%;
     --card-foreground: 240 10% 3.9%;
-
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
-
     --primary: 240 5.9% 10%;
     --primary-foreground: 0 0% 98%;
-
     --secondary: 240 4.8% 95.9%;
     --secondary-foreground: 240 5.9% 10%;
-
     --muted: 240 4.8% 95.9%;
     --muted-foreground: 240 3.8% 46.1%;
-
     --accent: 240 4.8% 95.9%;
     --accent-foreground: 240 5.9% 10%;
-
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-
     --border: 240 5.9% 90%;
     --input: 240 5.9% 90%;
     --ring: 240 10% 3.9%;
-
     --radius: 0.5rem;
   }
 
   .dark {
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
-
     --card: 240 10% 3.9%;
     --card-foreground: 0 0% 98%;
-
     --popover: 240 10% 3.9%;
     --popover-foreground: 0 0% 98%;
-
     --primary: 0 0% 98%;
     --primary-foreground: 240 5.9% 10%;
-
     --secondary: 240 3.7% 15.9%;
     --secondary-foreground: 0 0% 98%;
-
     --muted: 240 3.7% 15.9%;
     --muted-foreground: 240 5% 64.9%;
-
     --accent: 240 3.7% 15.9%;
     --accent-foreground: 0 0% 98%;
-
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
     --ring: 240 4.9% 83.9%;
@@ -89,10 +72,6 @@ body::-webkit-scrollbar-thumb {
   border-radius: 20px;
 }
 
-body::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
-
 .progress {
   background: linear-gradient(
     90deg,
@@ -107,6 +86,7 @@ body::-webkit-scrollbar-thumb:hover {
 
 .temperature {
   background-image: linear-gradient(to right, #00dfff 0%, #00f9ff 20%, yellow);
+  transition: background-color 0.5s ease; /* Smooth color transition */
 }
 
 .footer-text > img {
@@ -138,10 +118,6 @@ footer:hover .footer-text > img {
     width: 100%;
   }
 
-  .search-btn button {
-    width: 100%;
-  }
-
   .source-code-btn {
     order: -1;
   }
@@ -150,7 +126,7 @@ footer:hover .footer-text > img {
 @media screen and (max-width: 1010px) {
   .mapbox-con {
     flex-direction: column;
-    overflow: hidden; /* Manage overflow */
+    overflow: hidden; 
   }
 
   .mapbox-con > div:first-child {
@@ -158,3 +134,14 @@ footer:hover .footer-text > img {
     flex: initial;
   }
 }
+
+
+.temperature-bar {
+  height: 0.5rem; 
+  transition: background-color 0.5s ease;
+}
+
+.bg-blue-500 { background-color: #3B82F6; }
+.bg-green-500 { background-color: #22C55E; }
+.bg-yellow-500 { background-color: #FBBF24; }
+.bg-red-500 { background-color: #EF4444; }

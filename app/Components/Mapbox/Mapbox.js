@@ -35,6 +35,16 @@ function Mapbox() {
     return (
       <div className="flex-1 basis-[50%] border rounded-lg flex items-center justify-center">
         <h1>Loading...</h1>
+        {/* You can add a spinner here */}
+      </div>
+    );
+  }
+
+  // Error handling if the coordinates are not valid
+  if (!activeCityCords.lat || !activeCityCords.lon) {
+    return (
+      <div className="flex-1 basis-[50%] border rounded-lg flex items-center justify-center">
+        <h1>Error: Invalid coordinates</h1>
       </div>
     );
   }

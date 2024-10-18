@@ -22,7 +22,6 @@ function SearchDialog() {
   return (
     <div className="search-btn">
       <Dialog>
-        {/* Removed 'asChild' prop */}
         <DialogTrigger>
           <Button
             variant="outline"
@@ -46,7 +45,6 @@ function SearchDialog() {
             <ul className="px-3 pb-2">
               <p className="p-2 text-sm text-muted-foreground">Suggestions</p>
 
-              {/* Added a conditional check to avoid displaying 'No Results' when geoCodedList is empty */}
               {geoCodedList?.length === 0 ? (
                 <p className="p-2 text-sm">No Results</p>
               ) : (

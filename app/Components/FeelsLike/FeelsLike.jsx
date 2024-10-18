@@ -8,26 +8,20 @@ import React from "react";
 function FeelsLike() {
   const { forecast } = useGlobalContext();
 
-  if (!forecast || !forecast.main || !forecast.main.feels_like) {
+  if (!forecast?.main?.feels_like) {
     return <Skeleton className="h-[12rem] w-full" />;
   }
 
   const { feels_like, temp_min, temp_max } = forecast.main;
 
+  // Calculate a description for how it feels
   const feelsLikeText = (feelsLike, minTemp, maxTemp) => {
     const avgTemp = (minTemp + maxTemp) / 2;
+    const diff = feelsLike - avgTemp;
 
-    if (feelsLike < avgTemp - 5) {
-      return "Feels significantly colder than actual temperature.";
-    }
-    if (feelsLike >= avgTemp - 5 && feelsLike <= avgTemp + 5) {
-      return "Feels close to the actual temperature.";
-    }
-    if (feelsLike > avgTemp + 5) {
-      return "Feels significantly warmer than actual temperature.";
-    }
-
-    return "Temperature feeling is typical for this range.";
+    if (diff < -5) return "Feels significantly colder than actual temperature.";
+    if (diff >= -5 && diff <= 5) return "Feels close to the actual temperature.";
+    return "Feels significantly warmer than actual temperature.";
   };
 
   const feelsLikeDescription = feelsLikeText(feels_like, temp_min, temp_max);
@@ -38,7 +32,7 @@ function FeelsLike() {
         <h2 className="flex items-center gap-2 font-medium">
           {thermometer} Feels Like
         </h2>
-        <p className="pt-4 text-2xl">{kelvinToCelsius(feels_like)}°</p>
+        <p className="pt-4 text-2xl">{kelvinToCelsius(feels_like)}°C</p>
       </div>
 
       <p className="text-sm overflow-hidden text-ellipsis whitespace-nowrap">

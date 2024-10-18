@@ -13,7 +13,10 @@ function Navbar() {
 
   return (
     <div className="w-full py-4 flex items-center justify-between">
-      <div className="left"></div>
+      <div className="left">
+        {/* Added the title 'Sky Wise' */}
+        <h1 className="text-xl font-bold">SkyWise</h1>
+      </div>
       <div className="search-container flex shrink-0 w-full gap-2 sm:w-fit">
         <SearchDialog />
 

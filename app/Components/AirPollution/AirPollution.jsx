@@ -9,13 +9,8 @@ import React from "react";
 function AirPollution() {
   const { airQuality } = useGlobalContext();
 
-  // Check if airQuality is available and necessary properties are available
-  if (
-    !airQuality ||
-    !airQuality.list ||
-    !airQuality.list[0] ||
-    !airQuality.list[0].main
-  ) {
+  // Early return if airQuality data is not available
+  if (!airQuality?.list?.[0]?.main?.aqi) {
     return (
       <Skeleton className="h-[12rem] w-full col-span-2 md:col-span-full" />
     );
@@ -30,13 +25,15 @@ function AirPollution() {
   return (
     <div
       className="air-pollution pt-6 px-4 h-[12rem] border rounded-lg flex flex-col gap-8
-       dark:bg-dark-grey shadow-sm dark:shadow-none col-span-full sm-2:col-span-2 md:col-span-2 xl:col-span-2"
+       dark:bg-dark-grey shadow-sm dark:shadow-none col-span-full sm:col-span-2 md:col-span-2 xl:col-span-2"
     >
       <h2 className="flex items-center gap-2 font-medium">
         {thermo} Air Pollution
       </h2>
       <Progress value={airQualityIndex} max={100} className="progress" />
-      <p className="text-sm">Air quality is {filteredIndex?.description}.</p>
+      <p className="text-sm">
+        Air quality is {filteredIndex?.description || "unknown"}.
+      </p>
     </div>
   );
 }
